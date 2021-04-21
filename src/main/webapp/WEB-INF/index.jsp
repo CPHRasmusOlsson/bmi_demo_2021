@@ -14,22 +14,28 @@
 
     <jsp:body>
 
-        <div>
+       <div class ="row">
+           <div class ="col-sm-4"></div>
+           <div class="col-sm-4">
             <h2>BMI beregner</h2>
 
             <form method="post" action="fc/bmiresult">
-                <label for="height">Højde i cm:</label>
-                <input id="height" name="height" type="text"/><br/>
-                <label for="weight">vægt i kg:</label>
-                <input id="weight" name="weight" type="text"/><br/>
-
-                <button type="submit">Beregn BMI</button>
-
-
+                <div class="form-group">
+                    <label for="height">Højde i cm:</label>
+                    <input id="height" name="height" type="text" class="form-control"/><br/>
+                </div>
+                <div class="form-group">
+                    <label for="weight">vægt i kg:</label>
+                    <input id="weight" name="weight" type="text" class="form-control"/><br/>
+                </div>
+                <button type="submit" class="btn btn-primary">Beregn BMI</button>
             </form>
+       </div>
 
+           <div class ="col-sm-4"></div>
+       </div>
 
-
+        <div>
             <c:if test="${sessionScope.role == 'employee' }">
                 <p style="font-size: larger">This is what you can do,
                     since your are logged in as an employee</p>

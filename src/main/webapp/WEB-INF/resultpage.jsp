@@ -15,15 +15,20 @@
     <jsp:body>
 
         <div>
-            <h2>BMI Result</h2>
+        <div class="row">
+            <div class="col-sm-4"></div>
+
+            <div class="col-sm-4">
+                <h2>BMI Result</h2>
 
 
-            <p></p>
-            <c:out value ="Din højde er ${height}"/> <br/>
-            <c:out value ="Din vægt er ${weight}"/> <br/>
-            <c:out value ="Din BMI er beregnet til ${bmi}"/>    <br/>
-            <c:out value ="Du er ${category}"/>   <br/>
-
+                <p></p>
+                <c:out value="Din højde er ${height}"/> <br/>
+                <c:out value="Din vægt er ${weight}"/> <br/>
+                <c:out value="Din BMI er beregnet til ${bmi}"/> <br/>
+                <c:out value="Du er ${category}"/> <br/>
+                <div class="col-sm-4"></div>
+            </div>
         </div>
 
     </jsp:body>
