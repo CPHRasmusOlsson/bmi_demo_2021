@@ -18,7 +18,11 @@
             <h2>BMI Result</h2>
 
 
-            <p>Her kommer resultaterne</p>
+            <p></p>
+            <c:out value ="Din højde er ${height}"/> <br/>
+            <c:out value ="Din vægt er ${weight}"/> <br/>
+            <c:out value ="Din BMI er beregnet til ${bmi}"/>    <br/>
+            <c:out value ="Du er ${category}"/>   <br/>
 
         </div>
 

@@ -17,10 +17,18 @@
         <div>
             <h2>BMI beregner</h2>
 
-            <p>
-                her er et link til resultatsiden:
-                <a href="fc/bmiresult">Resultatside</a>
-            </p>
+            <form method="post" action="fc/bmiresult">
+                <label for="height">Højde i cm:</label>
+                <input id="height" name="height" type="text"/><br/>
+                <label for="weight">vægt i kg:</label>
+                <input id="weight" name="weight" type="text"/><br/>
+
+                <button type="submit">Beregn BMI</button>
+
+
+            </form>
+
+
 
             <c:if test="${sessionScope.role == 'employee' }">
                 <p style="font-size: larger">This is what you can do,
