@@ -1,14 +1,15 @@
 package web.commands;
 
 import business.exceptions.UserException;
-import java.text.DecimalFormat;
-
+import business.services.BmiUtil;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CalcBMICommand extends  CommandUnprotectedPage {
 
-    private static DecimalFormat df2 = new DecimalFormat("#.##");
+
 
 
     public CalcBMICommand(String pageToShow) {
@@ -22,30 +23,33 @@ public class CalcBMICommand extends  CommandUnprotectedPage {
         double weight = 0.0;
         double bmi = 0.0;
         String category ="";
+        String gender = request.getParameter("gender");
+        int sport_id = Integer.parseInt(request.getParameter("sport"));
+        String[] hobbies =request.getParameterValues("hobby");
+        List<String> hobbyList = null;
+        if(hobbies != null){
+            hobbyList = Arrays.asList(hobbies);
+        }
 
         try {
             height = Double.parseDouble(request.getParameter("height"));
             weight = Double.parseDouble(request.getParameter("weight"));
         } catch (NumberFormatException e){
-            throw new UserException("husk at du skal indtaste 2 heltal i formularen");
+            request.setAttribute("error","Husk at du skal indtaste 2 heltal i formularen");
+            return "index";
+            //throw new UserException("Husk at du skal indtaste 2 heltal i formularen");
         }
-        bmi = Double.parseDouble(df2.format(weight /((height / 100) * (height / 100))));
 
-
-        if (bmi>30){
-            category = "svært overvægtig";
-        } else if (bmi < 18.5){
-            category = "undervægtig";
-        } else if (bmi<25){
-            category  ="Normalvægtig";
-        }else{
-            category = "overvægtig";
-        }
+        bmi = BmiUtil.calcBMI(height,weight);
+        category = BmiUtil.getCategory(bmi);
 
         request.setAttribute("bmi",bmi);
         request.setAttribute("height",height);
         request.setAttribute("weight",weight);
         request.setAttribute("category",category);
+        request.setAttribute("gender",gender);
+        request.setAttribute("sport_id",sport_id);
+        request.setAttribute("hobbies", hobbyList);
 
 
 
