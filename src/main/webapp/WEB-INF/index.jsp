@@ -45,11 +45,11 @@
                     </select>
                     <br/>
 
-                    <input type="checkbox" id="hobby1" name="hobby" value="Jeg går op i sund kost">
+                    <input type="checkbox" id="hobby1" name="hobby" value="1">
                     <label for="hobby1"> Jeg går op i sund kost</label><br>
-                    <input type="checkbox" id="hobby2" name="hobby" value="Jeg har et sommerhus">
+                    <input type="checkbox" id="hobby2" name="hobby" value="2">
                     <label for="hobby2"> Jeg har et sommerhus</label><br>
-                    <input type="checkbox" id="hobby3" name="hobby" value="Jeg har et kæledyr">
+                    <input type="checkbox" id="hobby3" name="hobby" value="3">
                     <label for="hobby3"> Jeg har et kæledyr</label><br>
 
 
