@@ -4,7 +4,7 @@
 
 <t:genericpage>
     <jsp:attribute name="header">
-         List of sports
+         Edit sport
     </jsp:attribute>
     <jsp:attribute name="footer">
     </jsp:attribute>
@@ -13,29 +13,26 @@
         <div class="col-sm-4"></div>
         <div class="col-sm-4">
 
-
         <h1>Hello ${sessionScope.email} </h1>
-        <h3>This is a list of all sports:</h3>
+        <h3 class="mb-3">Edit and update text below:</h3>
 
 
         <form action="${pageContext.request.contextPath}/fc/managesports" method="post">
-        <table class="table">
-            <thead><th>ID</th><th>Navn</th><th></th><th></th></thead>
-            <c:forEach var="sportItem" items="${applicationScope.sportList}">
-                <tr>
-                    <td>${sportItem.sport_id}</td>
-                    <td>${sportItem.name}</td>
-                    <td><button class="btn btn-sm btn-danger" type="submit" name="delete" value="${sportItem.sport_id}">Fjern</button></td>
-                    <td><button class="btn btn-sm btn-primary" type="submit" name="edit" value="${sportItem.sport_id}">Rediger</button></td>
-                </tr>
-            </c:forEach>
-        </table>
+            <input type="hidden" name="sports_id" value="${requestScope.sportItem.sport_id}">
+
+            <div class="input-group input-group-sm mb-3">
+                <div class="form-group">
+                <label class="form-check-label" for="name" >Navn:</label>
+                <td><input id="name" class="form-control" type="text" name="name" value="${requestScope.sportItem.name}"/></td>
+                <td><button class="btn btn-sm btn-primary mt-2" type="submit" name="update">Rediger</button></td>
+                </div>
+            </div>
 
             <c:if test="${not empty requestScope.error}">
                 <p style="color:red;font-size: large">${requestScope.error}</p>
             </c:if>
-        </form>
 
+        </form>
         </div>
         <div class="col-sm-4">
 

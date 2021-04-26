@@ -13,7 +13,7 @@
         <p>you are now logged in as a EMPLOYEE of our wonderful BMI site.</p>
 
         <p><a href="${pageContext.request.contextPath}/fc/bmientries">gå til visning af alle BMI resultater</a></p> </p>
-        <p><a href="${pageContext.request.contextPath}/fc/mangesports">gå til sportsgrene</a></p> </p>
+        <p><a href="${pageContext.request.contextPath}/fc/managesports">gå til sportsgrene</a></p> </p>
 
     </jsp:body>
 </t:genericpage>

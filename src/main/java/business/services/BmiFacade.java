@@ -5,11 +5,17 @@ import business.entities.Sport;
 import business.exceptions.UserException;
 import business.persistence.BmiMapper;
 import business.persistence.Database;
+import business.persistence.SportMapper;
 
 import java.util.List;
 
 public class BmiFacade {
     private BmiMapper bmiMapper;
+
+
+
+
+
 
     public BmiFacade(Database database) {
         this.bmiMapper = new BmiMapper(database);
@@ -41,13 +47,7 @@ public class BmiFacade {
         bmiMapper.insertBmiEntry(bmi,height, weight, category, gender, sport_id, user_id,hobbyList);
     }
 
-    public List<Sport> getAllSports() throws UserException
-    {
-        return bmiMapper.getAllSports();
-    }
 
-    public  int deleteSport(int sportId) throws UserException
-    {
-        return bmiMapper.deleteSport(sportId);
-    }
+
+
 }

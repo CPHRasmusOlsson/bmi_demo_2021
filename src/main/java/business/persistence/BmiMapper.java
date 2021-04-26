@@ -17,86 +17,70 @@ public class BmiMapper {
         this.database = database;
     }
 
-    public List<BmiEntry> getBmiDataEntriesByUserId(int userId) throws UserException
-    {
+
+    public List<BmiEntry> getBmiDataEntriesByUserId(int userId) throws UserException {
         List<BmiEntry> bmiEntryList = new ArrayList<>();
 
-        try (Connection connection = database.connect())
-        {
+        try (Connection connection = database.connect()) {
             String sql = "SELECT * FROM bmi_entry WHERE user_id =?";
 
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
-                ps.setInt(1,userId);
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, userId);
                 ResultSet rs = ps.executeQuery();
-                while (rs.next())
-                {
+                while (rs.next()) {
                     int id = rs.getInt("bmi_entry_id");
                     int height = rs.getInt("height");
                     int weight = rs.getInt("weight");
                     String category = rs.getString("category");
-                    double bmi =rs.getDouble("bmi");
+                    double bmi = rs.getDouble("bmi");
                     String gender = rs.getString("gender");
                     Timestamp ts = rs.getTimestamp("created");
 
-                    bmiEntryList.add(new BmiEntry(id,height,weight,category,bmi,gender,ts));
+                    bmiEntryList.add(new BmiEntry(id, height, weight, category, bmi, gender, ts));
 
 
                 }
                 return bmiEntryList;
 
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");
         }
     }
 
 
-    public List<BmiEntry> getAllBmiDataEntries() throws UserException
-    {
+    public List<BmiEntry> getAllBmiDataEntries() throws UserException {
         List<BmiEntry> bmiEntryList = new ArrayList<>();
 
-        try (Connection connection = database.connect())
-        {
+        try (Connection connection = database.connect()) {
             String sql = "SELECT * FROM bmi_entry;";
 
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
-                while (rs.next())
-                {
+                while (rs.next()) {
                     int id = rs.getInt("bmi_entry_id");
                     int height = rs.getInt("height");
                     int weight = rs.getInt("weight");
                     String category = rs.getString("category");
-                    double bmi =rs.getDouble("bmi");
+                    double bmi = rs.getDouble("bmi");
                     String gender = rs.getString("gender");
                     Timestamp ts = rs.getTimestamp("created");
 
-                    bmiEntryList.add(new BmiEntry(id,height,weight,category,bmi,gender,ts));
+                    bmiEntryList.add(new BmiEntry(id, height, weight, category, bmi, gender, ts));
 
 
                 }
                 return bmiEntryList;
 
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new UserException("Connection to database could not be established");
         }
     }
-
 
 
     public void insertBmiEntry(double bmi,
@@ -106,12 +90,10 @@ public class BmiMapper {
                                String gender,
                                int sport_id,
                                int user_id,
-                               List<Integer> hobbyList)  throws UserException
-    {
-        try (Connection connection = database.connect())
-        {
+                               List<Integer> hobbyList) throws UserException {
+        try (Connection connection = database.connect()) {
             String sql = "INSERT INTO `bmi`.`bmi_entry` " +
-            "(" +
+                    "(" +
                     "`height`," +
                     "`weight`," +
                     "`category`," +
@@ -121,120 +103,49 @@ public class BmiMapper {
                     "`user_id`) " +
                     "VALUES (?,?,?,?,?,?,?);";
 
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
-            {
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setDouble(1, height);
                 ps.setDouble(2, weight);
                 ps.setString(3, category);
                 ps.setDouble(4, bmi);
                 ps.setString(5, gender);
-                ps.setInt(6,sport_id);
-                ps.setInt(7,user_id);
+                ps.setInt(6, sport_id);
+                ps.setInt(7, user_id);
 
                 ps.executeUpdate();
                 ResultSet ids = ps.getGeneratedKeys();
                 ids.next();
                 int bmiEntryId = ids.getInt(1);
-                for (Integer hobbyId : hobbyList)
-                {
-                    insertIntoLinkBmiHobbyEntry(bmiEntryId,(int)hobbyId);
+                for (Integer hobbyId : hobbyList) {
+                    insertIntoLinkBmiHobbyEntry(bmiEntryId, (int) hobbyId);
                 }
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new UserException(ex.getMessage());
         }
     }
 
-    public  void insertIntoLinkBmiHobbyEntry(int bmiEntryId,int hobbyId) throws UserException{
-        try (Connection connection = database.connect())
-        {
+    public void insertIntoLinkBmiHobbyEntry(int bmiEntryId, int hobbyId) throws UserException {
+        try (Connection connection = database.connect()) {
             String sql = "INSERT INTO `bmi`.`link_bmi_hobby` " +
                     "(`hobby_id`, " +
                     "`bmi_entry_id`) " +
                     "VALUES (? ,?);";
 
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-                ps.setInt(1,hobbyId);
-                ps.setInt(2,bmiEntryId);
+                ps.setInt(1, hobbyId);
+                ps.setInt(2, bmiEntryId);
                 ps.executeUpdate();
 
-            }
-            catch (SQLException ex)
-            {
+            } catch (SQLException ex) {
                 throw new UserException(ex.getMessage());
             }
-        }
-        catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             throw new UserException(ex.getMessage());
         }
     }
-
-    public  int deleteSport(int sportId) throws UserException{
-        try (Connection connection = database.connect())
-        {
-            String sql = "DELETE FROM sport WHERE sport_id = ? AND sport_id NOT IN (SELECT sport_id FROM bmi_entry)";
-
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
-
-                ps.setInt(1,sportId);
-                int rowsAffected = ps.executeUpdate();
-                return rowsAffected;
-            }
-            catch (SQLException ex)
-            {
-                throw new UserException(ex.getMessage());
-            }
-        }
-        catch (SQLException ex)
-        {
-            throw new UserException(ex.getMessage());
-        }
-    }
-
-    public List<Sport> getAllSports() throws UserException
-    {
-        List<Sport> sportList = new ArrayList<>();
-
-        try (Connection connection = database.connect())
-        {
-            String sql = "SELECT * FROM sport";
-
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
-                ResultSet rs = ps.executeQuery();
-                while (rs.next())
-                {
-                    int id = rs.getInt("sport_id");
-                    String name = rs.getString("name");
-
-
-                    sportList.add(new Sport(id,name));
-
-
-                }
-                return sportList;
-
-            }
-            catch (SQLException ex)
-            {
-                throw new UserException(ex.getMessage());
-            }
-        }
-        catch (SQLException ex)
-        {
-            throw new UserException("Connection to database could not be established");
-        }
-    }
-
 
 }

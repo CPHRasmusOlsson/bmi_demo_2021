@@ -4,6 +4,7 @@ import business.entities.User;
 import business.exceptions.UserException;
 import business.services.BmiFacade;
 import business.services.BmiUtil;
+import business.services.SportFacade;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class CalcBMICommand extends  CommandUnprotectedPage {
 
     private BmiFacade bmiFacade;
-
+    private SportFacade sportFacade;
 
     public CalcBMICommand(String pageToShow) {
 
