@@ -38,10 +38,10 @@
                     <label for="sport">Din primære idræt:</label>
 
                     <select name="sport" id="sport">
-                        <option value="1">Fodbold</option>
-                        <option value="2">Badminton</option>
-                        <option value="3">Jogging</option>
-                        <option value="4">Yoga</option>
+                        <c:forEach var="sport" items="${applicationScope.sportList}">
+                        <option value="${sport.sport_id}">${sport.name}</option>
+                        </c:forEach>
+
                     </select>
                     <br/>
 

@@ -1,5 +1,6 @@
 package web.commands;
 
+import business.entities.User;
 import business.exceptions.UserException;
 import business.services.BmiFacade;
 import business.services.BmiUtil;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class CalcBMICommand extends  CommandUnprotectedPage {
 
@@ -24,7 +26,16 @@ public class CalcBMICommand extends  CommandUnprotectedPage {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws UserException {
 
+        HttpSession session = request.getSession();
+        User user;
         int user_id =1;
+
+        if(session.getAttribute("user")!= null)
+        {
+         user = (User)session.getAttribute("user");
+        }
+
+
         double height = 0.0;
         double weight = 0.0;
         double bmi = 0.0;
